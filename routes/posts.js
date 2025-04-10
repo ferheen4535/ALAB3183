@@ -5,8 +5,8 @@ const posts = require("../data/posts");
 const error = require("../utilities/error");
 
 router
-  .route("/")
-  .get((req, res) => {
+  .route("/users/:id/posts")     ///{"error":"Resource Not Found"} not giving all the posts at once///
+  .get((req, res, next) => {
     const links = [
       {
         href: "posts/:id",
@@ -17,6 +17,9 @@ router
 
     res.json({ posts: paginatedPosts, links });
   })
+
+  
+
   .post((req, res, next) => {
     if (req.body.userId && req.body.title && req.body.content) {
       const post = {
@@ -82,7 +85,7 @@ router
 
 
 router
-  .route("/:id/comments")
+  .route("/:id/comments")         //comments/post/get///
   .get((req, res, next) => {
     const post = posts.find((p) => p.id == req.params.id);
 
